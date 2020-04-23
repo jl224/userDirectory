@@ -20,7 +20,8 @@ class App extends Component {
   state = {
     empTotal: employees,
     employees,
-    search: ""
+    search: "",
+    order: true
 
   };
 
@@ -42,7 +43,7 @@ class App extends Component {
     event.preventDefault();
     let search = this.state.search
     // Alert the user their first and last name, clear `this.state.firstName` and `this.state.lastName`, clearing the inputs
-    alert(`Hello ${this.state.search}`)
+    // alert(`Hello ${this.state.search}`)
     this.setState({
       search: "",
       employees: this.state.employees.filter(emp => emp.name.toLowerCase().includes(search.toLowerCase()))
@@ -55,8 +56,22 @@ class App extends Component {
     console.log("name clicked")
     // Set this.state.friends equal to the new friends array
     //this.setState({ employees });
-  };
-
+    console.log("order: ", this.state.order)
+    let order = this.state.order
+    let empSort = this.state.employees.sort(function (a, b) {
+      if (order) {
+        if (a.name < b.name) { return -1; }
+        else { return 1 }
+        //  if (a.name > b.name) { return 1; }
+        //  return 0;
+      }
+      else {
+        if (a.name < b.name) { return 1; }
+        else { return -1 }
+      }
+    })
+    this.setState({ employees: empSort, order: !this.state.order })
+  }
   // Map over this.state.friends and render a FriendCard component for each friend object
   render() {
     return (
